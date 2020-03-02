@@ -5,7 +5,8 @@ jobs:
     docker:
       - image: circleci/node:12.16
     steps:
-      --checkout -path https://github.com/snaphuntdemo/snapi-build.git
+      - checkout:
+          path: https://github.com/snaphuntdemo/snapi-build.git
       - restore_cache:
           key: demo-app-{{ checksum "package-lock.json" }}
       - run:

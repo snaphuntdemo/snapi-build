@@ -19,7 +19,7 @@ jobs:
             - ./node_modules
       - run:
           name: "test cover"
-          command: npm run testc
+          command: npm run test:coverage
       - run:
           name: "lint"
           command: npm run lint

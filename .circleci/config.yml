@@ -1,0 +1,38 @@
+version: 2.1
+jobs:
+  test:
+    working_directory: ~/app
+    docker:
+      - image: circleci/node:12.16
+    steps:
+      --checkout -path https://github.com/snaphuntdemo/snapi-build.git
+      - restore_cache:
+          key: demo-app-{{ checksum "package-lock.json" }}
+      - run:
+          name: "install"
+          command: npm install
+      - save_cache:
+          key: demo-app-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: "test cover"
+          command: npm run testc
+      - run:
+          name: "lint"
+          command: npm run lint
+  deploy:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - run:
+          name: "deploy to heroku"
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+workflows:
+  build-and-test:
+    jobs:
+      - test
+      - deploy:
+          requires:
+            - test

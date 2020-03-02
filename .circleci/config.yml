@@ -7,7 +7,7 @@ jobs:
     steps:
       - run:
           name: "checkout"
-          command: git checkout https://github.com/snaphunters/snapi.git
+          command: git clone https://github.com/snaphunters/snapi.git
       - run:
           name: "go to folder"
           command: cd snapi

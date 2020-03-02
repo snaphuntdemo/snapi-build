@@ -1,16 +1,13 @@
 version: 2.1
 jobs:
   test:
-    working_directory: ~/apps
+    working_directory: ~/app/snapi
     docker:
       - image: circleci/node:12.16
     steps:
       - run:
           name: "checkout"
-          command: git clone https://github.com/snaphunters/snapi.git
-      - run:
-          name: "go to folder"
-          command: cd snapi
+          command: cd .. && git clone https://github.com/snaphunters/snapi.git
       - restore_cache:
           key: demo-app-{{ checksum "package-lock.json" }}
       - run:
